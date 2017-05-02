@@ -1,0 +1,78 @@
+{% extends "base.html" %} 
+{% load crispy_forms_tags %}  
+
+
+
+{% block jumbo_content %}
+
+<div class="jumbotron">
+      <div class="row">
+       
+       <div class="col-sm-7">
+     
+        <h1>Landing Page</h1>
+        <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+        <p>
+          <a class="btn btn-lg btn-primary" href="{% url 'contact' %}" role="button">Join Us &raquo;</a>
+        </p>
+        </div>
+        <div class="col-sm-5">
+        <!--<iframe width="408" height="238" src="https://www.youtube.com/embed/ZTTxtMjXN88" frameborder="0" allowfullscreen></iframe>-->
+        <img style="border-radius: 10px;" src="https://static.pexels.com/photos/69731/pexels-photo-69731.jpeg" class="img-responsive"/>
+      </div>
+      </div>
+
+{% endblock %}
+
+
+{% block content %}
+{% if request.user.is_authenticated and request.user.is_staff %}
+<h1> you are loged in</h1>
+{% for instance in queryset %}
+<table class="table">
+  <tr><td>{{ forloop.counter }}</td><td>{{ instance.email }}</td><td>{{ instance.name }}</td><td>{{ instance.timestamp|timesince }}</td></tr>
+</table>
+{% endfor %}
+
+{% else %}
+<div class="row">
+<div class="col-xs-3 pull-right">
+<p class="lead">{{ title }}</p>
+<form method="POST" action="">
+	{{ form|crispy}}{% csrf_token %}
+	<input type="submit" class="btn btn-primary" value="Sign UP">
+
+</form>
+</div>
+
+<div class="col-sm-3" style="text-align: center;">
+<i class="fa fa-bicycle fa-3x" aria-hidden="true"></i>
+</br>
+</br>
+<p class="lead">Running on Django</p>
+<p>lorem ipsum dolor sitor is a dubmy text sitor is a dubmy text sitor is a dubmy text ipsum dolor sitor is a dubmy text sitor is a dubmy text sitor is a dubmy text.</p>
+</div>
+
+<div class="col-sm-3" style="text-align: center;">
+<i class="fa fa-file-text-o fa-3x" aria-hidden="true"></i>
+</br>
+</br>
+<p class="lead">Landing Page</p>
+<p>lorem ipsum dolor sitor is a dubmy text sitor is a dubmy text sitor is a dubmy text ipsum dolor sitor is a dubmy text sitor is a dubmy text sitor is a dubmy text.</p>
+</div>
+
+<div class="col-sm-3" style="text-align: center;">
+<i class="fa fa-code fa-3x" aria-hidden="true"></i>
+</br>
+</br>
+<p class="lead">Personal Project</p>
+<p>lorem ipsum dolor sitor is a dubmy text sitor is a dubmy text sitor is a dubmy text ipsum dolor sitor is a dubmy text sitor is a dubmy text sitor is a dubmy text.</p>
+</div>
+
+
+
+
+
+</div>
+{% endif %}
+{% endblock %}
